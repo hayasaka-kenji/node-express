@@ -1,0 +1,30 @@
+{
+  "name": "node-hiyoko",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.0.2",
+    "ejs-lint": "^1.0.1",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "start": "nodemon -r ./app.js",
+    "lint": "ejslint views/index.ejs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hayasaka-kenji/node-hiyoko.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hayasaka-kenji/node-hiyoko/issues"
+  },
+  "homepage": "https://github.com/hayasaka-kenji/node-hiyoko#readme"
+}
