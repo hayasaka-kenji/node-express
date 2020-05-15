@@ -12,7 +12,8 @@ function(resolve, rejected){}
 ```
 
 ## Promise.then()
-インスタンスメソッド。resolve, rejectedが実行されると読み込まれる。
+インスタンスメソッド。  
+resolve, rejectedが実行されると読み込まれる。
 
 ### 構文
 ```js

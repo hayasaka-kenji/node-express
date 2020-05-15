@@ -1,32 +1,31 @@
 ## http
-- サーバー生成
+- サーバー生成  
 サーバー生成をするスタティックメソッド。
 ```js
 http.CreateServer()
 ```
-- サーバー
+- サーバー  
 スタティックメソッドを実行して得られるインスタンス。
 http.Server
-- レスポンス
+- レスポンス  
 http.ServerResponse
-- リクエスト
+- リクエスト  
 http.server
 
 ## http.Server
-- ヘッダー書き込み
+- ヘッダー書き込み  
 res.writeHeader(status, header)
-- ボディー書き込み
+- ボディー書き込み  
 res.write(data)
-- 書き込み完了
-res.end()
-必ず呼ぶようにする。（呼ばないとリクエストが帰ってこない。）
+- 書き込み完了  
+res.end() 必ず呼ぶようにする。（呼ばないとリクエストが帰ってこない。）
 
 ## http.IncomingMessage
-- メソッド
+- メソッド  
 req.method
-- URL
+- URL  
 req.url
-- ヘッダー
+- ヘッダー  
 req.headers (キーバリュー型のオブジェクト)
-- ボディー
+- ボディー  
 data で呼び出し。ストリーム型。

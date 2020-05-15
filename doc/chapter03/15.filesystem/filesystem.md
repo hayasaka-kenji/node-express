@@ -3,11 +3,11 @@
 fs.readFile(path, encoding, (err, data)=>{})
 ```
 
-- path
+- path  
 読み込みファイルパス。
-- encoding
+- encoding  
 エンコード (shift_jisなどはデフォルトでは不可。モジュールを利用)
-- (err, data)=>{}
+- (err, data)=>{}  
 コールバック。読み込み完了時に呼び出される。
 
 ## ファイルの書き込み
@@ -15,9 +15,9 @@ fs.readFile(path, encoding, (err, data)=>{})
 fs.writeFile(path, data, (err)=>{})
 ```
 
-- path
+- path  
 読み込みファイルパス。
-- data
+- data  
 エンコード (デフォルトはUTF-8で出力)
-- (err)=>{}
+- (err)=>{}  
 コールバック。読み込み完了時に呼び出される。
