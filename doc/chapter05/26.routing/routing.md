@@ -72,3 +72,10 @@ URLとマッチング
 - o GET: /user/123
 - x GET: /user/abc
 - x GET: /user/abc/def
+
+## express.Router
+```js
+const router = express.Router();
+```
+- ルーティングモジュールを作成できる。
+- 指定できる内容はルーティングに関わるもの。
