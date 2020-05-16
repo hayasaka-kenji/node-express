@@ -1,11 +1,15 @@
 const express = require('express');
 const app = express();
 
-// app.useに対して作成したミドルウェアを引き渡す
-app.use(require('./lib/logger'));
-
 app.get('/', (req, res) => {
   res.status(200).send('hello world');
+});
+
+// userの値を表示
+app.get('/user/(\\d+)', (req, res) => {
+  // reqで受け取る
+  res.status(200).send(req.params.id);
+  console.log(req.params.id)
 });
 
 app.listen(3000);
