@@ -17,5 +17,12 @@
     - 公開する false
 
 ## 公開手順
-1. ログイン `npm login`
-1. 公開 `npm publish --access public`
+1. ログイン  
+`npm login`
+1. 公開  
+`npm publish --access public`
+
+## 取り下げ
+1. 非公開  
+`npm unpublish --force`  
+公開から24時間経過するとメール確認が必要
