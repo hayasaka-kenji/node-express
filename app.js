@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 
-// ミドルウェアなのでuseを使う
-// user配下は./route/userを使うようにする
-app.use('/user', require('./route/user'));
+app.use(require('./lib/logger'));
+
+app.get('/',(req, res) => {
+  res.status(200).send('helloworld')
+})
 
 app.listen(3000);
