@@ -6,7 +6,7 @@
   <title>サンプル</title>
 </head>
 <body>
-  <h1><%= title %>: ejs</h1>
-  <p>Node.jsを利用したアプリケーション</p>
+  <%# インクルードファイルへデータを引き渡す %> 
+  <%- include('./items.ejs', items) %> 
 </body>
 </html>
