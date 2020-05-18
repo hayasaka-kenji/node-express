@@ -6,7 +6,13 @@
   <title>サンプル</title>
 </head>
 <body>
-  <%# インクルードファイルへデータを引き渡す %> 
-  <%- include('./items.ejs', items) %> 
+  <h1>Node.js form</h1>
+  <form action="/" method="post">
+    <ul>
+      <li><input type="text" name="text" id=""></li>
+      <li><input type="checkbox" name="checkbox" id=""></li>
+    </ul>
+    <input type="submit" value="Send">
+  </form> 
 </body>
 </html>

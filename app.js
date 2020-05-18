@@ -1,22 +1,20 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
-// すべてものを読み取る
-app.all('/', (req, res) => {
-  console.log(req.method);
-  console.log(req.url);
-  console.log(JSON.stringify(req.headers));  // JSONパースする
+app.set('view engine', 'ejs');
 
-  // リクエストのオブジェクトがストリーミングになっているので変換する
-  // 変数bodyに chunkを溜め込んでendで吐き出す
-  let body = '';
-  req.on('data', (chunk) => {
-    body += chunk;
-  });
-  req.on('end', () => {
-    console.log(body);
-  });
-  res.send('OK');
-})
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-app.listen(3000)
+app.get('/', (req, res) => {
+  res.render('./index') // .ejsの表記は省略可能
+});
+
+// indexからpostで送る。
+// debugからreq.bodyで送った値を見ることができる。もしくはreqにカーソルを当てる
+app.post('/', (req, res) => {
+  res.send('OK')
+});
+
+app.listen(3000);
