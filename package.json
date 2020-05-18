@@ -6,8 +6,14 @@
   "directories": {
     "doc": "doc"
   },
+  "config": {
+    "message": "\"Error: no test specified\""
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo $npm_package_config_message && exit 1",
+    "concat": "concat -o ./dist/sample.txt ./src/sample1.txt ./src/sample2.txt",
+    "del": "del ./dist/*",
+    "sass": "node-sass --watch --include-path ./src/scss ./src/scss/style.scss dist/css/style.css --output-style compressed"
   },
   "repository": {
     "type": "git",
@@ -27,5 +33,12 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "concat": "^1.0.3",
+    "del": "^5.1.0",
+    "del-cli": "^3.0.1",
+    "gulp": "^4.0.2",
+    "node-sass": "^4.14.1"
   }
 }
