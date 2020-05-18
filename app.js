@@ -1,13 +1,22 @@
 const express = require('express');
 const app = express();
 
-// express.staticというミドルウェアを使用する。
-// 絶対パス指定することができる(ルートパスを指定できる)
-app.use(express.static(__dirname + '/public'));
+// すべてものを読み取る
+app.all('/', (req, res) => {
+  console.log(req.method);
+  console.log(req.url);
+  console.log(JSON.stringify(req.headers));  // JSONパースする
 
-// public
-// /public以下のファイルにpublicをマッピングするという指定になる
-// 静的ファイルの読み込みも変更になるので注意。
-// app.use('/public', express.static(__dirname + '/public'));
+  // リクエストのオブジェクトがストリーミングになっているので変換する
+  // 変数bodyに chunkを溜め込んでendで吐き出す
+  let body = '';
+  req.on('data', (chunk) => {
+    body += chunk;
+  });
+  req.on('end', () => {
+    console.log(body);
+  });
+  res.send('OK');
+})
 
 app.listen(3000)
