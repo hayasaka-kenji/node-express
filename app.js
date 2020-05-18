@@ -1,15 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.set('view engine', 'ejs');
+app.use(cookieParser()); // ミドルウェアなのでuseが必要
 
 app.get('/', (req, res) => {
-  console.log(req.get('user-agent'));
-  // クラアントにキャッシュさせない
-  res.set('cash-control', 'no-cache');
-  res.set('Pragma', 'no-cache');
-  res.render('./index')
+  let count = parseInt(req.cookies.count || 0); // 文字列なので数値に変換する。
+  res.cookie('count', count + 1);
+  res.render('./index', {count});
 });
 
 app.listen(3000);
