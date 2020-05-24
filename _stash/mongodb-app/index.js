@@ -9,7 +9,7 @@ const url = 'mongodb://localhost:27017/';
 const connectOption = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}
+};
 
 MongoClient.connect(url, connectOption, (error, client) => {
   const db = client.db('sample');

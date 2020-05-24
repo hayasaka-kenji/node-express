@@ -5,7 +5,7 @@ const url = 'mongodb://user:user@localost:27017/sample';
 const connectOption = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}
+};
 
 MongoClient.connect(url, connectOption, (err, db) => {
   if(err) {
@@ -20,5 +20,5 @@ MongoClient.connect(url, connectOption, (err, db) => {
   bulk.insert({name: 'tape', price: 80});
   bulk.execute((err, res) => {
     db.close();
-  })
-})
+  });
+});
