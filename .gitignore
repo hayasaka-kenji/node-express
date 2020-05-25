@@ -97,4 +97,6 @@ typings/
 !.vscode/launch.json
 !.vscode/extensions.json
 
-
+# output dir
+public/development
+public/production
