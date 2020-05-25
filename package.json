@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "gulp": "gulp",
-    "build-dev": "set NODE_ENV=development && gulp",
-    "build-prod": "set NODE_ENV=production && gulp",
+    "build-dev": "export NODE_ENV=development && gulp",
+    "build-prod": "export NODE_ENV=production && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "kenji.hayasaka",
@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.0",
+    "ejs": "^2.7.4",
+    "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3"
