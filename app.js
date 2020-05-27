@@ -14,8 +14,10 @@ app.use('/public',
 
 app.use(accesslogger());
 
+// Route
 app.use('/', require('./routes/index'));
 app.use('/posts/', require('./routes/posts'));
+app.use('/search/', require('./routes/search'));
 
 app.use(systemlogger());
 
