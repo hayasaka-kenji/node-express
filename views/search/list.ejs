@@ -10,6 +10,10 @@
     <%- include('../_share/navbar'); %>
     <main role="main" class="container">
 
+      <div class="float-right">
+        <span class="badge badge-secondary"><%= count %> count</span>
+      </div>
+
       <form action="/search" method="get" class="form-inline mt-5 mb-5">
         <input type="text" name="keyword" id="keyword" class="form-control" value="<%= keyword %>">
         <input type="submit" value="Search" class="btn btn-secondary ml-2">
@@ -20,6 +24,18 @@
           <%- include('./item', item) %>
         <% } %> 
       </div>
+
+      <nav>
+        <ul class="pagination">
+          <% for( let i = 1; i <= pagination.max; i++ ) { %>
+            <% if (pagination.current !== i) { %>
+              <li class="page-item"><a class="page-link" href="/search/?keyword=<%= keyword %>&page=<%= i %>"><%= i %></a></li>
+            <% } else { %>
+              <li class="page-item active"><a class="page-link disabled"><%= i %></a></li>
+            <% } %>
+          <% } %>
+        </ul>
+      </nav>
 
     </main><!-- /.container -->
     <%- include('../_share/javascripts'); %>

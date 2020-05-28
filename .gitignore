@@ -100,3 +100,4 @@ typings/
 # output dir
 public/development
 public/production
+log/*
