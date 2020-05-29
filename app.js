@@ -18,6 +18,7 @@ app.use(accesslogger());
 app.use('/', require('./routes/index'));
 app.use('/posts/', require('./routes/posts'));
 app.use('/search/', require('./routes/search'));
+app.use('/account/', require('./routes/account'));
 
 app.use(systemlogger());
 
