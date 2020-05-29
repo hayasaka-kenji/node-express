@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "プログラムの起動(production)",
+      "name": "Run program --production",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -19,7 +19,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "プログラムの起動(development)",
+      "name": "Run program --development",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -31,7 +31,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Gulp起動",
+      "name": "Gulp",
       "program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
       "args": [
         "task"
