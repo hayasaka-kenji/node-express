@@ -1,6 +1,7 @@
 const { CONNECTION_URL, OPTIONS, DATABASE } = require('../config/mongodb.config');
 const router = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
+let tokens = new require('csrf')(); // インスタンスの生成
 
 const validateRegistData = function (body) {
   let isValidated = true, errors = {};
@@ -10,7 +11,7 @@ const validateRegistData = function (body) {
     errors.url = "No URL has been entered. Please enter the URL that starts with '/'.";
   }
 
-  if (body.url && /^\//.test(body.url) === false ) {
+  if (body.url && /^\//.test(body.url) === false) {
     isValidated = false;
     errors.url = "Please enter the URL that starts with '/'.";
   }
@@ -42,7 +43,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/posts/regist', (req, res) => {
-  res.render('./account/posts/regist-form');
+  tokens.secret((error, secret) => {
+    const token = tokens.create(secret);
+    req.session._csrf = secret;
+    res.cookie('_csrf', token);
+    res.render('./account/posts/regist-form');
+  });
 });
 
 router.post('/posts/regist/input', (req, res) => {
@@ -53,17 +59,25 @@ router.post('/posts/regist/input', (req, res) => {
 router.post('/posts/regist/confirm', (req, res) => {
   const original = createRegistData(req.body);
   const errors = validateRegistData(req.body);
-  if(errors){
+  if (errors) {
     res.render('./account/posts/regist-form', { errors, original });
     return;
   }
-  res.render('./account/posts/regist-confirm', {original});
+  res.render('./account/posts/regist-confirm', { original });
 });
 
 router.post('/posts/regist/execute', (req, res) => {
+  // Validate session and cookies
+  const secret = req.session._csrf;
+  const token = req.cookies._csrf; // Be careful because's' is added
+  if (tokens.verify(secret, token) === false) {
+    throw new Error('Invalid token.');
+  }
+
   const original = createRegistData(req.body);
   const errors = validateRegistData(req.body);
-  if(errors){
+
+  if (errors) {
     res.render('./account/posts/regist-form', { errors, original });
     return;
   }
@@ -73,6 +87,9 @@ router.post('/posts/regist/execute', (req, res) => {
     db.collection('posts')
       .insertOne(original)
       .then(() => {
+        // Delete session and cookies
+        delete req.session._csrf;
+        res.clearCookie('_csrf');
         res.render('./account/posts/regist-complete');
       }).catch((error) => {
         throw error;

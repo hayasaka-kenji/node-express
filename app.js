@@ -1,9 +1,11 @@
+const { SESSION_SECRET } = require('./config/app.config').security;
 const accesslogger = require('./lib/log/accesslogger');
 const systemlogger = require('./lib/log/systemlogger');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
-
 
 app.set('view engine', 'ejs');
 app.disable('x-powerd-by');
@@ -14,7 +16,16 @@ app.use('/public',
 );
 
 app.use(accesslogger());
-app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(cookieParser());
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  name: 'sid'
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Route
