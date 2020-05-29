@@ -1,6 +1,7 @@
 const accesslogger = require('./lib/log/accesslogger');
 const systemlogger = require('./lib/log/systemlogger');
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 
@@ -13,11 +14,14 @@ app.use('/public',
 );
 
 app.use(accesslogger());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // Route
 app.use('/', require('./routes/index'));
 app.use('/posts/', require('./routes/posts'));
 app.use('/search/', require('./routes/search'));
+app.use('/account/', require('./routes/account'));
 app.use('/account/', require('./routes/account'));
 
 app.use(systemlogger());
