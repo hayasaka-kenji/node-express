@@ -90,7 +90,7 @@ router.post('/posts/regist/execute', (req, res) => {
         // Delete session and cookies
         delete req.session._csrf;
         res.clearCookie('_csrf');
-        res.render('./account/posts/regist-complete');
+        res.redirect('/account/posts/regist/complete');
       }).catch((error) => {
         throw error;
       }).catch(() => {
@@ -101,6 +101,8 @@ router.post('/posts/regist/execute', (req, res) => {
   res.render('./account/posts/regist-complete');
 });
 
-
+router.get('/posts/regist/complete', (req, res) => {
+  res.render('./account/posts/regist-complete');
+});
 
 module.exports = router;
