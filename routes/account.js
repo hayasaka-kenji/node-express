@@ -1,4 +1,5 @@
 const { CONNECTION_URL, OPTIONS, DATABASE } = require('../config/mongodb.config');
+const { authenticate, authorize } = require('../lib/security/accountcontrol');
 const router = require('express').Router();
 const MongoClient = require('mongodb').MongoClient;
 let tokens = new require('csrf')(); // インスタンスの生成
@@ -38,11 +39,18 @@ const createRegistData = function (body) {
   };
 };
 
-router.get('/', (req, res) => {
+router.get('/', authorize('readWrite'), (req, res) => {
   res.render('./account/index');
 });
 
-router.get('/posts/regist', (req, res) => {
+router.get('/login', (req, res) => {
+  res.render('./account/login', {message: req.flash('message')});
+});
+
+router.post('/login', authenticate());
+
+
+router.get('/posts/regist', authorize('readWrite'), (req, res) => {
   tokens.secret((error, secret) => {
     const token = tokens.create(secret);
     req.session._csrf = secret;
@@ -51,12 +59,12 @@ router.get('/posts/regist', (req, res) => {
   });
 });
 
-router.post('/posts/regist/input', (req, res) => {
+router.post('/posts/regist/input', authorize('readWrite'), (req, res) => {
   const original = createRegistData(req.body);
   res.render('./account/posts/regist-form', { original });
 });
 
-router.post('/posts/regist/confirm', (req, res) => {
+router.post('/posts/regist/confirm', authorize('readWrite'), (req, res) => {
   const original = createRegistData(req.body);
   const errors = validateRegistData(req.body);
   if (errors) {
@@ -66,7 +74,7 @@ router.post('/posts/regist/confirm', (req, res) => {
   res.render('./account/posts/regist-confirm', { original });
 });
 
-router.post('/posts/regist/execute', (req, res) => {
+router.post('/posts/regist/execute', authorize('readWrite'), (req, res) => {
   // Validate session and cookies
   const secret = req.session._csrf;
   const token = req.cookies._csrf; // Be careful because's' is added
@@ -101,7 +109,7 @@ router.post('/posts/regist/execute', (req, res) => {
   res.render('./account/posts/regist-complete');
 });
 
-router.get('/posts/regist/complete', (req, res) => {
+router.get('/posts/regist/complete', authorize('readWrite'), (req, res) => {
   res.render('./account/posts/regist-complete');
 });
 
