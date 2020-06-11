@@ -33,11 +33,25 @@ app.use(flash());
 app.use(...accountcontrol.initialize()); // 分割代入
 
 // Route
-app.use('/', require('./routes/index'));
-app.use('/posts/', require('./routes/posts'));
-app.use('/search/', require('./routes/search'));
-app.use('/account/', require('./routes/account'));
-app.use('/api/posts', require('./api/posts'));
+app.use('/api', (() => {
+  const router = express.Router();
+  router.use('/posts', require('./api/posts'));
+  return router;
+})());
+
+app.use('/', (() => {
+  const router = express.Router();
+  router.use((req, res, next)=>{
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    next();
+  });
+  router.use('/posts/', require('./routes/posts'));
+  router.use('/search/', require('./routes/search'));
+  router.use('/account/', require('./routes/account'));
+  router.use('/', require('./routes/index'));
+  return router;
+})());
+
 app.use(systemlogger());
 
 app.listen(3000);
