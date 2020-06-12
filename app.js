@@ -41,7 +41,7 @@ app.use('/api', (() => {
 
 app.use('/', (() => {
   const router = express.Router();
-  router.use((req, res, next)=>{
+  router.use((req, res, next) => {
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     next();
   });
@@ -53,5 +53,43 @@ app.use('/', (() => {
 })());
 
 app.use(systemlogger());
+
+// 400
+app.use((req, res, next) => {
+  const data = {
+    method: req.method,
+    protocol: req.protocol,
+    version: req.httpVersion,
+    url: req.url
+  };
+  res.status(400);
+
+  // ajax
+  if (req.xht) {
+    res.json(data);
+  } else {
+    res.render('./404.ejs', { data });
+  }
+});
+
+app.use((err, req, res, next) => {
+  const data = {
+    method: req.method,
+    protocol: req.protocol,
+    version: req.httpVersion,
+    url: req.url,
+    error: (process.env.NODE_ENV === 'development') ? {
+      name: err.name,
+      message: err.message,
+      stack: err.stack
+    }: undefined,
+  };
+  res.status(500);
+  if(req.xhr) {
+    res.json(data);
+  } else {
+    res.render('./500.ejs', {data});
+  }
+});
 
 app.listen(3000);
