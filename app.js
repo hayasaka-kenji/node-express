@@ -82,13 +82,13 @@ app.use((err, req, res, next) => {
       name: err.name,
       message: err.message,
       stack: err.stack
-    }: undefined,
+    } : undefined,
   };
   res.status(500);
-  if(req.xhr) {
+  if (req.xhr) {
     res.json(data);
   } else {
-    res.render('./500.ejs', {data});
+    res.render('./500.ejs', { data });
   }
 });
 
